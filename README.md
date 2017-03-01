@@ -3,4 +3,4 @@
 - export NRF52_SDK='/PATH/TO/nRF5_SDK_12.2.0_f012efa'
 - make
 
-Done!
+Based on an example project in Nordic's SDK
