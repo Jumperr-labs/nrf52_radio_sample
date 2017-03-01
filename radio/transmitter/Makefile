@@ -2,8 +2,9 @@ PROJECT_NAME     := transmitter_pca10040
 TARGETS          := nrf52832_xxaa
 OUTPUT_DIRECTORY := _build
 
-SDK_ROOT := ../../../../../../..
-PROJ_DIR := ../../..
+
+SDK_ROOT := $(NRF52_SDK)
+PROJ_DIR := .
 
 $(OUTPUT_DIRECTORY)/nrf52832_xxaa.out: \
   LINKER_SCRIPT  := transmitter_gcc_nrf52.ld
