@@ -1,12 +1,12 @@
-PROJECT_NAME     := receiver_pca10028
-TARGETS          := nrf51422_xxac
+PROJECT_NAME     := receiver_pca10040
+TARGETS          := nrf52832_xxaa
 OUTPUT_DIRECTORY := _build
 
-SDK_ROOT := ../../../../../../..
-PROJ_DIR := ../../..
+SDK_ROOT := $(NRF52_SDK)
+PROJ_DIR := .
 
-$(OUTPUT_DIRECTORY)/nrf51422_xxac.out: \
-  LINKER_SCRIPT  := receiver_gcc_nrf51.ld
+$(OUTPUT_DIRECTORY)/nrf52832_xxaa.out: \
+  LINKER_SCRIPT  := receiver_gcc_nrf52.ld
 
 # Source files common to all targets
 SRC_FILES += \
@@ -32,8 +32,8 @@ SRC_FILES += \
   $(SDK_ROOT)/external/segger_rtt/RTT_Syscalls_GCC.c \
   $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT.c \
   $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT_printf.c \
-  $(SDK_ROOT)/components/toolchain/gcc/gcc_startup_nrf51.S \
-  $(SDK_ROOT)/components/toolchain/system_nrf51.c \
+  $(SDK_ROOT)/components/toolchain/gcc/gcc_startup_nrf52.S \
+  $(SDK_ROOT)/components/toolchain/system_nrf52.c \
 
 # Include folders common to all targets
 INC_FOLDERS += \
@@ -66,14 +66,25 @@ INC_FOLDERS += \
 LIB_FILES += \
 
 # C flags common to all targets
-CFLAGS += -DNRF51
-CFLAGS += -DNRF51422
+CFLAGS += -DNRF52_PAN_12
+CFLAGS += -DNRF52_PAN_15
+CFLAGS += -DNRF52_PAN_58
 CFLAGS += -DSWI_DISABLE0
-CFLAGS += -DBOARD_PCA10028
-CFLAGS += -mcpu=cortex-m0
+CFLAGS += -DNRF52_PAN_20
+CFLAGS += -DNRF52_PAN_54
+CFLAGS += -DNRF52
+CFLAGS += -DNRF52_PAN_51
+CFLAGS += -DNRF52_PAN_36
+CFLAGS += -DCONFIG_GPIO_AS_PINRESET
+CFLAGS += -DNRF52_PAN_64
+CFLAGS += -DNRF52_PAN_55
+CFLAGS += -DBOARD_PCA10040
+CFLAGS += -DNRF52_PAN_31
+CFLAGS += -DNRF52832
+CFLAGS += -mcpu=cortex-m4
 CFLAGS += -mthumb -mabi=aapcs
 CFLAGS +=  -Wall -Werror -O3 -g3
-CFLAGS += -mfloat-abi=soft
+CFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16
 # keep every function in separate section, this allows linker to discard unused ones
 CFLAGS += -ffunction-sections -fdata-sections -fno-strict-aliasing
 CFLAGS += -fno-builtin --short-enums 
@@ -83,14 +94,26 @@ CXXFLAGS += \
 
 # Assembler flags common to all targets
 ASMFLAGS += -x assembler-with-cpp
-ASMFLAGS += -DNRF51
-ASMFLAGS += -DNRF51422
+ASMFLAGS += -DNRF52_PAN_12
+ASMFLAGS += -DNRF52_PAN_15
+ASMFLAGS += -DNRF52_PAN_58
 ASMFLAGS += -DSWI_DISABLE0
-ASMFLAGS += -DBOARD_PCA10028
+ASMFLAGS += -DNRF52_PAN_20
+ASMFLAGS += -DNRF52_PAN_54
+ASMFLAGS += -DNRF52
+ASMFLAGS += -DNRF52_PAN_51
+ASMFLAGS += -DNRF52_PAN_36
+ASMFLAGS += -DCONFIG_GPIO_AS_PINRESET
+ASMFLAGS += -DNRF52_PAN_64
+ASMFLAGS += -DNRF52_PAN_55
+ASMFLAGS += -DBOARD_PCA10040
+ASMFLAGS += -DNRF52_PAN_31
+ASMFLAGS += -DNRF52832
 
 # Linker flags
 LDFLAGS += -mthumb -mabi=aapcs -L $(TEMPLATE_PATH) -T$(LINKER_SCRIPT)
-LDFLAGS += -mcpu=cortex-m0
+LDFLAGS += -mcpu=cortex-m4
+LDFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16
 # let linker to dump unused sections
 LDFLAGS += -Wl,--gc-sections
 # use newlib in nano version
@@ -100,12 +123,12 @@ LDFLAGS += --specs=nano.specs -lc -lnosys
 .PHONY: $(TARGETS) default all clean help flash 
 
 # Default target - first one defined
-default: nrf51422_xxac
+default: nrf52832_xxaa
 
 # Print all targets that can be built
 help:
 	@echo following targets are available:
-	@echo 	nrf51422_xxac
+	@echo 	nrf52832_xxaa
 
 TEMPLATE_PATH := $(SDK_ROOT)/components/toolchain/gcc
 
@@ -114,10 +137,10 @@ include $(TEMPLATE_PATH)/Makefile.common
 $(foreach target, $(TARGETS), $(call define_target, $(target)))
 
 # Flash the program
-flash: $(OUTPUT_DIRECTORY)/nrf51422_xxac.hex
+flash: $(OUTPUT_DIRECTORY)/nrf52832_xxaa.hex
 	@echo Flashing: $<
-	nrfjprog --program $< -f nrf51 --sectorerase
-	nrfjprog --reset -f nrf51
+	nrfjprog --program $< -f nrf52 --sectorerase
+	nrfjprog --reset -f nrf52
 
 erase:
 	nrfjprog --eraseall -f nrf52
