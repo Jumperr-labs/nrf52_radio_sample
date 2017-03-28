@@ -216,7 +216,7 @@ int main(void)
 
     while (true)
     {
-        nrf_delay_ms(5000);
+        nrf_delay_ms(100000);
         
         APP_ERROR_CHECK(nrf_drv_saadc_buffer_convert(adc_buffer,1));
         nrf_drv_saadc_sample();

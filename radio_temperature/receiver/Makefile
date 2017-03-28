@@ -45,7 +45,6 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/libraries/fifo \
   $(SDK_ROOT)/components/device \
   $(SDK_ROOT)/components/libraries/uart \
-  ../config \
   $(SDK_ROOT)/components/toolchain/cmsis/include \
   $(SDK_ROOT)/components/drivers_nrf/hal \
   $(SDK_ROOT)/components \

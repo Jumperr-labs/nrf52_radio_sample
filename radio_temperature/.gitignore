@@ -1,0 +1,6 @@
+transmitter/.project
+_build/
+.vscode
+venv/
+.idea/
+**.pyc
